@@ -1,0 +1,278 @@
+
+body {
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+.navbar {
+    background-color: #000000;
+    
+}
+
+.navbar-brand {
+    color: #ffffff;
+}
+
+.navbar-toggler {
+    border-color: #ffffff;
+}
+
+.navbar-toggler-icon {
+    background-image: url('https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist//img/icons/bootstrap-icons.svg');
+    filter: invert(1);
+}
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: #111;
+    padding-top: 60px;
+    transition: 0.3s;
+    z-index: 999;
+}
+
+.sidebar a {
+    padding: 8px 8px 8px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    color: #f1f1f1;
+}
+
+.sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+    color: #ffffff;
+}
+.button {
+  background-color: #3498db;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #1abc9c;
+}
+h1 {
+  color: #fff;
+  font-size: 32px;
+  margin: 20px 0;
+  text-align: center;
+}
+.background-c{
+  background-color: #4b4b4b;
+  border: #000000 solid 1px;
+  border-radius: 20px;
+  color: white;
+}
+.img{
+  width: 150px;
+}
+@media screen and (max-width: 768px) {
+  .img{
+    width: 100px;
+  } 
+}
+.card-title-one-line {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.custom-title {
+  font-size: 2.5rem;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.card {
+  z-index: -1;
+  border: 1px solid rgb(163, 163, 163);
+  background-color: #706f6f;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(94, 93, 93, 0.1);
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.card-title-one-line {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card h5 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #333;
+  color: #fff;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid rgb(43, 43, 43);
+}
+
+th {
+  background-color: #555;
+}
+
+tr:nth-child(even) {
+  background-color: #444;
+}
+
+tr:nth-child(odd) {
+  background-color: #222;
+}
+
+.rowspan-header {
+  background-color: #555;
+}
+
+
+.dark-select {
+  background-color: #1f1f1f;
+  color: #fff;
+  border: 1px solid #333;
+  border-radius: 5px;
+  padding: 8px;
+  margin-right: 10px;
+}
+
+.dark-select option {
+  background-color: #333;
+}
+
+
+
+
+body.light-mode {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.light-mode .navbar {
+  background-color: #ffffff;
+}
+
+.light-mode .navbar-brand {
+  color: #000000;
+}
+
+.light-mode .navbar-toggler {
+  border-color: #000000;
+}
+
+.light-mode .navbar-toggler-icon {
+  filter: invert(0);
+}
+
+.light-mode .custom-title {
+  font-size: 2.5rem;
+  color: #000000;
+  margin-bottom: 1rem;
+}
+.light-mode .card {
+  color: #000000;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  padding: 10px;
+  height: fit-content;
+}
+
+.light-mode .card-title {
+  font-size: 19px;
+  margin-bottom: 10px;
+}
+
+.light-mode .card-subtitle {
+  font-size: 18px;
+  color: #666;
+}
+
+.light-mode table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #f9f9f9; 
+  color: #000000;
+}
+
+.light-mode th,
+.light-mode td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid rgb(200, 200, 200); 
+}
+
+.light-mode th {
+  background-color: #ddd;
+}
+
+.light-mode tr:nth-child(even) {
+  background-color: #f0f0f0; 
+}
+
+.light-mode tr:nth-child(odd) {
+  background-color: #ffffff; 
+}
+
+.light-mode .rowspan-header {
+  background-color: #ddd; }
+
+  .light-mode .background-c{
+    background-color: #e6e5e5;
+    border: #000000 solid 1px;
+    border-radius: 20px;
+    color: rgb(0, 0, 0);
+  }
+
+  .loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+  }
+  
+  .loading-spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin: 15px;
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

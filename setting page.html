@@ -1,0 +1,283 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Setting Page</title>
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="main.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark fixed-top ">
+        <div class="container-fluid">
+            <a class="navbar-brand img " ><img  class="img" src="img/stellantis.png" alt=""></a>
+    
+            <ul class="navbar-nav text-left flex-row">
+              <li class="nav-item px-3 ">
+                <a class="nav-link btn-outline-dark" href="main.html">MAIN</a>
+              </li>
+                <li class="nav-item px-3">
+                    <a class="nav-link btn-outline-dark " href="yesterday.html">YESTERDAY</a>
+                </li>
+                <li class="nav-item  px-3">
+                    <a class="nav-link btn-outline-dark"  onclick="spinActivated()" href="tables.html">Today's Numbers</a>
+                </li>
+                <li class="nav-item  px-3">
+                    <a class="nav-link btn-outline-dark" href="stats pesonalise.html">Customised Statistics</a>
+                </li>
+                <li class="nav-item px-3">
+                    <a class="nav-link text-light" href="setting page.html">SETTINGS</a>
+                </li>
+                <li class="nav-item  px-3">
+                    <a  id="mode-toggle" class="nav-link btn-outline-dark cursor-pointer" >Change The Mode</a>
+                </li>
+            </ul>
+            <button class="navbar-toggler fixed-right" type="button" onclick="toggleSidebar()">
+              <span class="bi bi-person"></span>
+          </button>
+        </div>
+    </nav>
+
+    <div id="sidebar" class="sidebar text-center">
+        <h4 class="text-center">YAHYA FEKRANE</h4>
+        <a class=" btn-outline-dark " href="main.html">MAIN
+          </a>
+        <a class=" btn-outline-dark " href="yesterday.html">STATISTIC</a>
+        <a class=" btn-outline-dark " onclick="spinActivated()" href="tables.html">Today's Numbers </a> 
+        <a class=" btn-outline-dark " href="stats pesonalise.html">Customised Statistics</a>
+        <a class="btn-danger text-light " href="">Logout</a>
+    </div>
+
+    <div class="container text-center ">
+        <h1 class="pb-2 pt-5">App And Account Settings</h1>
+        <div id="loading" class="loading-overlay">
+            <h4>Data loading ...     </h4><br>
+            <div class="loading-spinner"></div>
+        </div>
+        
+    
+    </div>
+    <div class="container mt-5">
+        <div class="row">
+
+            <div class="col-lg-6">
+                <h3 class="text-center mb-4">PQG Setting:</h3>
+                <form class="bg-secondary border border-dark rounded-3 p-4" action="" method="GET">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="dAaYnsQWx3BdTSLUEgsVxsr7FNRqIESX3Mrpn8IJYMrGVdMXYvsAc68OC0a9FSPH"> 
+                    
+                    <div class="mb-3">
+                        <div class="row">
+                            <label class="form-label col-6  h5" for="HC1">HC1</label>
+                            <div class="col-6 text-center ">
+                            <button type="button" onclick="SuppConfirm('HC1')" class="btn me-5 righ-div  btn-danger ">DELETE</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label >Static :</label>
+                            <input class="form-control " type="text" id="StaticHC1" name="StaticHC1" value="24">
+                        </div>
+                        <div class="row">
+                            <label >Dynamic :</label>
+                            <input class="form-control" type="text" id="DynamicHC1" name="DynamicHC1" value="14">
+                        </div>
+                    </div>
+                    <hr>
+                    
+                    <div class="mb-3">
+                        <div class="row">
+                            <label class="form-label col-6  h5" for="HC2">HC2</label>
+                            <div class="col-6 text-center ">
+                            <button type="button" onclick="SuppConfirm('HC2')" class="btn me-5 righ-div  btn-danger ">DELETE</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label >Static :</label>
+                            <input class="form-control " type="text" id="StaticHC2" name="StaticHC2" value="18">
+                        </div>
+                        <div class="row">
+                            <label >Dynamic :</label>
+                            <input class="form-control" type="text" id="DynamicHC2" name="DynamicHC2" value="11">
+                        </div>
+                    </div>
+                    <hr>
+                    
+                    <div class="mb-3">
+                        <div class="row">
+                            <label class="form-label col-6  h5" for="PDB">PDB</label>
+                            <div class="col-6 text-center ">
+                            <button type="button" onclick="SuppConfirm('PDB')" class="btn me-5 righ-div  btn-danger ">DELETE</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label >Static :</label>
+                            <input class="form-control " type="text" id="StaticPDB" name="StaticPDB" value="5">
+                        </div>
+                        <div class="row">
+                            <label >Dynamic :</label>
+                            <input class="form-control" type="text" id="DynamicPDB" name="DynamicPDB" value="6">
+                        </div>
+                    </div>
+                    <hr>
+                    
+                    <div class="mb-3">
+                        <div class="row">
+                            <label class="form-label col-6  h5" for="POM">POM</label>
+                            <div class="col-6 text-center ">
+                            <button type="button" onclick="SuppConfirm('POM')" class="btn me-5 righ-div  btn-danger ">DELETE</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label >Static :</label>
+                            <input class="form-control " type="text" id="StaticPOM" name="StaticPOM" value="68">
+                        </div>
+                        <div class="row">
+                            <label >Dynamic :</label>
+                            <input class="form-control" type="text" id="DynamicPOM" name="DynamicPOM" value="17">
+                        </div>
+                    </div>
+                    <hr>
+                    
+                    <div class="mb-3">
+                        <div class="row">
+                            <label class="form-label col-6  h5" for="MV2">MV2</label>
+                            <div class="col-6 text-center ">
+                            <button type="button" onclick="SuppConfirm('MV2')" class="btn me-5 righ-div  btn-danger ">DELETE</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label >Static :</label>
+                            <input class="form-control " type="text" id="StaticMV2" name="StaticMV2" value="15">
+                        </div>
+                        <div class="row">
+                            <label >Dynamic :</label>
+                            <input class="form-control" type="text" id="DynamicMV2" name="DynamicMV2" value="10">
+                        </div>
+                    </div>
+                    <hr>
+                    
+                    <div class="mb-3">
+                        <div class="row">
+                            <label class="form-label col-6  h5" for="MV3">MV3</label>
+                            <div class="col-6 text-center ">
+                            <button type="button" onclick="SuppConfirm('MV3')" class="btn me-5 righ-div  btn-danger ">DELETE</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label >Static :</label>
+                            <input class="form-control " type="text" id="StaticMV3" name="StaticMV3" value="2">
+                        </div>
+                        <div class="row">
+                            <label >Dynamic :</label>
+                            <input class="form-control" type="text" id="DynamicMV3" name="DynamicMV3" value="23">
+                        </div>
+                    </div>
+                    <hr>
+                    
+                    <div class="mb-3">
+                        <div class="row">
+                            <label class="form-label col-6  h5" for="MV4">MV4</label>
+                            <div class="col-6 text-center ">
+                            <button type="button" onclick="SuppConfirm('MV4')" class="btn me-5 righ-div  btn-danger ">DELETE</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label >Static :</label>
+                            <input class="form-control " type="text" id="StaticMV4" name="StaticMV4" value="11">
+                        </div>
+                        <div class="row">
+                            <label >Dynamic :</label>
+                            <input class="form-control" type="text" id="DynamicMV4" name="DynamicMV4" value="8">
+                        </div>
+                    </div>
+                    <hr>
+                    
+                    <div class="mb-3">
+                        <div class="row">
+                            <label class="form-label col-6  h5" for="PP">PP</label>
+                            <div class="col-6 text-center ">
+                            <button type="button" onclick="SuppConfirm('PP')" class="btn me-5 righ-div  btn-danger ">DELETE</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label >Static :</label>
+                            <input class="form-control " type="text" id="StaticPP" name="StaticPP" value="10">
+                        </div>
+                        <div class="row">
+                            <label >Dynamic :</label>
+                            <input class="form-control" type="text" id="DynamicPP" name="DynamicPP" value="6">
+                        </div>
+                    </div>
+                    <hr>
+                    
+                    <button type="submit" class="btn w-100 btn-dark">Submit</button>
+                </form>
+            </div>
+            <div class="col-lg-6 ">
+                <h3 class="text-center mb-4">Account Settings:</h3>
+                <form class="bg-secondary border border-dark rounded-3 p-4" action="" method="POST">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="dAaYnsQWx3BdTSLUEgsVxsr7FNRqIESX3Mrpn8IJYMrGVdMXYvsAc68OC0a9FSPH"> 
+                    <input hidden name="id" type="text" value="FEKRANE">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <input readonly class="form-control bg-dark text-light" id="fname" type="text" value="YAHYA">
+                        </div>
+                        <div class="col-md-6">
+                            <input readonly class="form-control bg-dark text-light" id="lname" type="text" value="FEKRANE">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <input class="form-control bg-light text-dark" required placeholder="OLD PASSWORD" name="oldpswd" type="password">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <input class="form-control bg-light text-dark" required placeholder="NEW PASSWORD" name="newpswd" type="password">
+                        </div>
+                        <div class="col-md-6">
+                            <input class="form-control bg-light text-dark" required placeholder="CONFIRM THE NEW PASSWORD" name="conpswd" type="password">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-dark w-100">SUBMIT</button>
+                </form>
+                <h3 class="text-center pt-5 mb-4">ADD PQG :</h3>
+                <form class="bg-secondary border border-dark rounded-3 p-4" action="" method="GET">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="dAaYnsQWx3BdTSLUEgsVxsr7FNRqIESX3Mrpn8IJYMrGVdMXYvsAc68OC0a9FSPH"> 
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <input class="form-control bg-light text-dark"  required placeholder="PQG NAME" name="pqg" type="text">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <input class="form-control bg-light text-dark" required placeholder="STATIC NBR" name="static" type="text">
+                        </div>
+                        <div class="col-md-6">
+                            <input class="form-control bg-light text-dark" required placeholder="DYNAMIC NBR" name="dynamic" type="text">
+                        </div>
+                    </div>
+                    <button  class="btn btn-dark w-100">SUBMIT</button>
+                </form>
+            </div>
+        </div>
+    </div>
+<script>
+    function SuppConfirm(pqg,event) {
+    const confirmed = confirm('Are you sure you want to delete '+pqg+' ?');
+    if (confirmed) {
+        const url = ``;
+        location.href = url;
+    }
+}
+</script>
+<script src="main.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
