@@ -1,5 +1,4 @@
 
-
   @import url('https://fonts.googleapis.com/css2?family=Acme&display=swap');
 
   /* Navbar styles */
@@ -25,7 +24,6 @@
 .navbar-toggler-icon {
     filter: invert(0);
 }
-
 
 
 .navbar-nav .nav-item {
@@ -91,7 +89,7 @@
   .button {
       background-color: #243882;
       color: #ffffff;
-      padding: 10px 20px;
+      padding: 5px 10px;
       border: none;
       border-radius: 5px;
       cursor: pointer;
@@ -202,7 +200,6 @@ tr:nth-child(odd) {
   /* Custom title styles */
   .custom-title {
       font-size: 2.5rem;
-      margin-bottom: 1rem;
       font-family: 'Acme', monospace;
       font-weight: 500;
       color: #243882;

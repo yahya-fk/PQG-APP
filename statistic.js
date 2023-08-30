@@ -34,4 +34,6 @@ function toggleLoadingOverlay(show) {
   }
 function spinActivated(){
   toggleLoadingOverlay(true);}
+  document.addEventListener("DOMContentLoaded", spinActivated());
+
 

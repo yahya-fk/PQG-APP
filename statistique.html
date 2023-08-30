@@ -1,0 +1,751 @@
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Page de statistiques</title>
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="main.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+</head>
+<body>
+
+    <nav class="navbar fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand img"><img class="img" src="img/stellantis.gif"></a>
+    
+            <ul class="navbar-nav text-left flex-row">
+                <li class="nav-item px-3">
+                    <a class="nav-link btn-outline-white " onclick="spinActivated()" href="menu.html">MENU</a>
+                </li>
+                <li class="nav-item px-3">
+                    <a class="nav-link btn-outline-white " onclick="spinActivated()" href="ajourdhui.html">AUJOURD'HUI</a>
+                </li>
+                <li class="nav-item px-3">
+                    <a class="nav-link btn-outline-white" onclick="spinActivated()" href="hier.html">HIER</a>
+                </li>
+                <li class="nav-item px-3">
+                    <a class="nav-link btn-outline-white" onclick="spinActivated()" href="data.html">DATA</a>
+                </li>
+                <li class="nav-item px-3">
+                    <a class="nav-link btn-outline-white text-light" onclick="spinActivated()" href="statistique.html">STATISTIQUES</a>
+                </li>
+                <li class="nav-item px-3">
+                    <a class="nav-link btn-outline-white" onclick="spinActivated()" href="parametre.html">PARAMÈTRES</a>
+                </li>
+            </ul>
+            <button class="navbar-toggler fixed-right" type="button" onclick="toggleSidebar()">
+                <span class="bi bi-person"></span>
+            </button>
+        </div>
+    </nav>
+    
+    <div id="sidebar" class="sidebar border pt-5 border-dark text-center">
+        <h4 class="text-center pt-5">YAHYA FEKRANE</h4>
+        <a class="btn-outline-dark" onclick="spinActivated()" href="ajourdhui.html">AUJOURD'HUI</a>
+        <a class="btn-outline-dark" onclick="spinActivated()" href="hier.html">HIER</a>
+        <a class="btn-outline-dark" onclick="spinActivated()" href="data.html">DATA</a>
+        <a class="btn-outline-dark" onclick="spinActivated()" href="statistique.html">STATISTIQUES</a>
+        <a class="btn-outline-dark" onclick="spinActivated()" href="parametre.html">PARAMÈTRES</a>
+        <a class="btn-danger text-light" onclick="spinActivated()" href="index.html">Déconnexion</a>
+    </div>
+    <div class="container text-center mt-5">
+        <h1 class="p-3 custom-title">Statistiques Personnalisées</h1>
+    </div>
+    <div id="loading" class="loading-overlay">
+        <h4>Chargement des données en cours ...</h4><br>
+        <div class="loading-spinner"></div>
+    </div>
+    <form onsubmit="spinActivated()" action="statistiqueN.html" class="w-100 text-center" method="GET">
+        <input type="hidden" name="csrfmiddlewaretoken" value="X1TnAN8TQI8d1JInCYibRVpldJbNJR6E81oZo3a2lpqwQtqSCu92rOoh5ONI5UW8">
+        <div class="row w-100 justify-content-center align-items-center">
+            <select required name="date" id="date" class="col-md-3 dark-select">
+                <option value="">choisir une date</option>
+                <option value="week">7 derniers jours</option>
+                <option value="twoWeek">14 derniers jours</option>
+                <option value="month">30 derniers jours</option>
+            </select>
+            <select required name="pqg" id="pqg" class="col-md-3 dark-select">
+                <option value="">choisir un PQG</option>
+                
+                    <option value="HC1">HC1</option>
+                
+                    <option value="HC2">HC2</option>
+                
+                    <option value="PDB">PDB</option>
+                
+                    <option value="POM">POM</option>
+                
+                    <option value="MV2">MV2</option>
+                
+                    <option value="MV3">MV3</option>
+                
+                    <option value="MV4">MV4</option>
+                
+                    <option value="PP">PP</option>
+                
+            </select>
+            <select  name="dataway" id="dataway" class="col-md-3 dark-select">
+                <option value="">choisir la méthode d'extraction des données</option>
+                <option value="Emon">Basée sur l'heure Emon</option>
+                <option value="nData">Basé sur les données brutes du système</option>
+            </select>
+        </div>
+        <div class="row justify-content-center w-100 mt-3">
+            <button  class="btn btn-primary w-25 border-1 border-secondary" type="submit">Soumettre</button>
+        </div>
+    </form>
+    
+<div class="row justify-content-center">
+    <div class="p-3 h-50 col-5 text-center">
+        <h3> Efficacité du HC1 par Jour </h3>
+        <div class="row background-c ">
+            <canvas class="p-3 " id="lineChart"></canvas>
+        </div>
+    </div>
+    <div class="p-3 h-50  col-5 text-center">
+        <h3> Efficacité du HC1 par Jour et par poste </h3>
+        <div class="row background-c">
+            <canvas class="p-3" id="lineChart2"></canvas>
+        </div>
+    </div>
+</div>
+<table style="width: 90%;" class=" m-auto">
+    <tr>
+      <th colspan="6">DÉFAUTS DÉTECTÉS</th>
+    </tr>
+    <tr >
+      <th>RESPONSABLE</th>
+      <th >DÉFAUTS</th>
+      <th>NOMBRE DE DÉTECTIONS</th>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">GARNITURE PAVILLON/DEFORMANT (VISION DEFORMEE)</td>
+      <td>307</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">BSI1-BOITIER SERVITUDE INTELLIGENT/DEFAUT CTRL ELEC/ELECTRO</td>
+      <td>250</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">FREIN/MULTI-VISSAGE NON REALISE, A CONTROLER</td>
+      <td>172</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">GARNITURE PAVILLON/TACHES</td>
+      <td>140</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">TRACA:SAC GONFLABLE PLANCHE BORD/MANQUANT, NON SAISI</td>
+      <td>127</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">2630-FEU ARG/RAYURE</td>
+      <td>106</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">FREIN/MULTI-VISSAGE NON TERMINE</td>
+      <td>95</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">FREIN/MULTI-VISSAGE NON CONFORME</td>
+      <td>87</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">TRACA:SAC GONFLABLE PLANCHE BORD/ORGANE EN DOUBLON</td>
+      <td>86</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">7500-BOITIER ELECTRONIQUE AAS/DEFAUT CTRL ELEC/ELECTRO</td>
+      <td>81</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">2635-FEU ARD/RAYURE</td>
+      <td>80</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">PORTE AVG / PORTE ARG/MULTI-VISSAGE NON CONFORME</td>
+      <td>72</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">CAISSE ASS/MANQUANT, NON SAISI</td>
+      <td>70</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">TRACA:CARTE CODE TRANSPONDEUR/MANQUANT, NON SAISI</td>
+      <td>68</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">TRAPPE CARBURANT/MANQUE</td>
+      <td>68</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">ZONE ENTREE PORTE AVG/ECAILLAGE</td>
+      <td>67</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">PIED CENT G/MULTI-VISSAGE NON CONFORME</td>
+      <td>62</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">FEU AR BROUILLARD/DEFAUT CTRL ELEC/ELECTRO</td>
+      <td>60</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">GARNITURE PAVILLON (A1)/DEFORMANT (VISION DEFORMEE)</td>
+      <td>59</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">MASSE EQUILIBRAGE CAISSE/MULTI-VISSAGE NON CONFORME</td>
+      <td>54</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">ZONE ENTREE PORTE AVD/ECAILLAGE</td>
+      <td>53</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">GARNITURE MONTANT D BAIE PARE-BRISE/COUPE, DETERIORE</td>
+      <td>50</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">TRACA:LEVIER FREIN SECONDAIRE ENS/MANQUANT, NON SAISI</td>
+      <td>48</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">ETIQUETTE CONSTRUCTEUR/NON CONFORME ASPECT</td>
+      <td>45</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">TRACA:PEDALIER ENS/MANQUANT, NON SAISI</td>
+      <td>40</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">DOUBLURE VOLET AR/DEFORMANT (VISION DEFORMEE)</td>
+      <td>37</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">RENVOI CEINTURE SECURITE AVG/MULTI-VISSAGE NON CONFORME</td>
+      <td>34</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">BOITIER DE COMMANDE ELEC.DE PORTE/DEFAUT CTRL ELEC/ELECTRO</td>
+      <td>34</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">PIED AVD/VISSAGE NON CONFORME</td>
+      <td>33</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">DOUBLURE VOLET AR/ECAILLAGE</td>
+      <td>33</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">GARN.INF MONTANT D BAIE PARE-BRISE/PDB/RAYURE</td>
+      <td>32</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">PAVILLON/DEFORMANT (VISION DEFORMEE)</td>
+      <td>32</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">RENVOI CEINTURE SECURITE AVD/MULTI-VISSAGE NON CONFORME</td>
+      <td>31</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">PARE-SOLEIL PASSAGER/COUPE, DETERIORE</td>
+      <td>29</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">FAISCEAU HABITACLE/CONFORMITE NON REALISEE, A CONTROLER</td>
+      <td>29</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">GACHE PORTE AV+ARD/MULTI-VISSAGE NON CONFORME</td>
+      <td>26</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">LONGERON G/ECAILLAGE</td>
+      <td>25</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">TRACA:PEDALE ACCELERATEUR/MANQUANT, NON SAISI</td>
+      <td>25</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">BOITE FUSIBLE DEPART BATTERIE/CASSE, FISSURE</td>
+      <td>25</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">VOLET AR/DEFORMATIONS, ONDULATIONS, CREUX</td>
+      <td>24</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">6574-CAPTEUR ACCEL.SAC GONFLABLE LAT D/MULTI-VISSAGE NON CONFORME</td>
+      <td>24</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">PAVILLON/DEFORMATIONS, ONDULATIONS, CREUX</td>
+      <td>24</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">DESSOUS CAISSE ET SOUS CAPOT/FAISCEAU MAL POSITIONNE, MAL CHEMINE</td>
+      <td>24</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">TRACA:PEDALE ACCELERATEUR/ORGANE EN DOUBLON</td>
+      <td>23</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">TRACA:PEDALIER ENS/ORGANE EN DOUBLON</td>
+      <td>23</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">VOLET AR/DEFORMANT (VISION DEFORMEE)</td>
+      <td>23</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">AMPLIFICATEUR MAITRE CYLINDRE / PEDALIER/CONFORMITE NON REALISEE, A CONTROLER</td>
+      <td>22</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">LONGERON D/ECAILLAGE</td>
+      <td>22</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">PEDALIER COMPLET - PEDALIER AUTO ECOLE/CONFORMITE NON REALISEE, A CONTROLER</td>
+      <td>22</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">BSI1-10BA BOITIER SERVITUDE INTELLIGENT/CONFORMITE NON REALISEE, A CONTROLER</td>
+      <td>20</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">LEVIER FREIN SECONDAIRE ENS/CONFORMITE NON REALISEE, A CONTROLER</td>
+      <td>20</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">70A7-CAPTEUR VIDE AMPLI. FREINAGE (ESP)/CONFORMITE NON REALISEE, A CONTROLER</td>
+      <td>19</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">GARNITURE MONTANT G BAIE PARE-BRISE/COUPE, DETERIORE</td>
+      <td>18</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">JOINT ENTREE PORTE AVD/MAL CLIPPE, MAL VERROUILLE</td>
+      <td>18</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">PEDALE ACCELERATEUR/CONFORMITE NON REALISEE, A CONTROLER</td>
+      <td>16</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">TEMOIN C-S AV (TEMOIN NON BOUCLAGE)/DEFAUT CTRL ELEC/ELECTRO</td>
+      <td>16</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">PEDALIER COMPLET - PEDALIER AUTO ECOLE/MULTI-VISSAGE NON CONFORME</td>
+      <td>15</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">TRACA:SAC GONFLABLE LAT G PAVILLON/MANQUANT, NON SAISI</td>
+      <td>15</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">TRACA:SAC GONFLABLE LAT D PAVILLON/MANQUANT, NON SAISI</td>
+      <td>15</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">VOLET AR/MULTI-VISSAGE NON CONFORME</td>
+      <td>14</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">FAISCEAU PROJECTEUR BROUILLARD/MAL CLIPPE, MAL VERROUILLE</td>
+      <td>14</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">TRACA:BOITIER ELEC.SAC GONF. PRETENSIO/MANQUANT, NON SAISI</td>
+      <td>14</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">GARN.INF MONTANT D BAIE PARE-BRISE/PDB/COUPE, DETERIORE</td>
+      <td>13</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">ZONE ENTREE PORTE AVD/DEFORMANT (VISION DEFORMEE)</td>
+      <td>13</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">GARNITURE CUSTODE D/MAL CLIPPE, MAL VERROUILLE</td>
+      <td>12</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">JOINT ENTREE PORTE ARD/COUPE, DETERIORE</td>
+      <td>11</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">BOITE FUSIBLE DEPART BATTERIE/MANQUE</td>
+      <td>10</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">JOINT ENTREE PORTE ARG/COUPE, DETERIORE</td>
+      <td>10</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">LONGERONNET ARD/VISSAGE NON TERMINE</td>
+      <td>10</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">LONGERONNET ARG/VISSAGE NON CONFORME</td>
+      <td>10</td>
+    </tr>
+  
+    <tr>
+      <td>HC1</td>
+      <td style="font-size: 15px; text-align:left; font-weight:bolder;">GARNITURE MONTANT G BAIE PARE-BRISE/RAYURE</td>
+      <td>10</td>
+    </tr>
+  
+  </table>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+document.getElementById("pqg").value="HC1";
+document.getElementById("date").value="month";
+document.getElementById("dataway").value="Emon";
+let targetValue=95
+
+document.addEventListener('DOMContentLoaded', function () {
+    const labels = ["7/25", "7/26", "7/27", "7/28", "7/29", ];
+    const data = {
+        labels: labels,
+        datasets: [{
+            label: 'Efficacité du PQG',
+            data: ["37.75743707093822", "27.989487516425754", "28.912466843501328", "24.459234608985025", "30.544993662864385", ],
+            fill: true,
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.1
+        }]
+    };
+    const config = {
+        type: 'line',
+        data: data,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Jour',
+                    },
+                    ticks: {
+                        color: 'grey',
+                    },
+                },
+                y: {
+                    stacked: true,
+                    beginAtZero: true,
+                    max: 100, 
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Efficacité',
+                    },
+                    ticks: {
+                        color: 'grey', 
+                    },
+                },
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        color: 'black'
+                    }
+                },
+                tooltip: {
+                    bodyColor: 'black',
+                },
+                datalabels: {
+                    color: 'black'
+                },
+                annotation: {
+                    annotations: [
+                        {
+                            type: 'line',
+                            mode: 'horizontal',
+                            scaleID: 'y',
+                            value: 70,
+                            borderColor: 'green',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            backgroundColor: 'rgba(0, 255, 0, 0.0)',
+                            label: {
+                                color:"green",
+                                backgroundColor: 'rgba(0, 255, 0, 0.0)',
+                                enabled: true,
+                                content: 'Objectif (' + 70 + '%)',
+                                position: 'left',
+                            },
+                        },
+                    ],
+                },
+            },
+        },
+    };
+
+    const ctx = document.getElementById('lineChart').getContext('2d');
+    new Chart(ctx, config);
+});
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const chartData = {
+        labels: ["7/25", "7/26", "7/27", "7/28", "7/29", ],
+        datasets: []
+    };
+    
+    const chartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            x: {
+                display: true,
+                title: {
+                    display: true,
+                    text: 'Jour',
+                },
+                ticks: {
+                     color: 'grey', 
+                  },
+            },
+            y: {
+                display: true,
+                beginAtZero: true,
+                max: 100,
+                title: {
+                    display: true,
+                    text: 'Efficacité',
+                },
+                ticks: {
+                    color: 'grey',
+                    max: 100,
+                    beginAtZero: true,
+                },
+            },
+        },
+        plugins: {
+            annotation: {
+                annotations: [
+                    {
+                        type: 'line',
+                        mode: 'horizontal',
+                        scaleID: 'y',
+                        value: 70,
+                        borderColor: 'green',
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        label: {
+                            color:"green",
+                            backgroundColor: 'rgba(0, 255, 0, 0)', 
+                            enabled: true,
+                            content: 'Objectif ('+70+'%)', 
+                            position: 'left',
+                        },
+                    },
+                ],
+            },
+        },
+    };
+
+    const ctx = document.getElementById('lineChart2').getContext('2d');
+    const lineChart = new Chart(ctx, {
+        type: 'line',
+        data: chartData,
+        options: chartOptions,
+    });
+
+    function addLineToChart(label, data, borderColor) {
+        const newDataset = {
+            label: label,
+            data: data,
+            fill: false,
+            borderColor: borderColor,
+            tension: 0.1
+        };
+
+        lineChart.data.datasets.push(newDataset);
+        lineChart.update();
+    }
+
+    const dataset1Data = ["36.29032258064516", "21.474358974358974", "29.921259842519685", "27.076923076923077", "23.02405498281787", ];
+    const dataset1Label = 'A';
+    const dataset1BorderColor = 'blue';
+    addLineToChart(dataset1Label, dataset1Data, dataset1BorderColor);
+
+    const dataset2Data = ["37.81818181818182", "24.257425742574256", "25.257731958762886", "23.312883435582823", "27.467811158798284", ];
+    const dataset2Label = 'B';
+    const dataset2BorderColor = 'red';
+    addLineToChart(dataset2Label, dataset2Data, dataset2BorderColor);
+
+    const dataset3Data = ["52.08132239382239", "36.82795698924731", "25.12422360248447", "24.476650563607087", "33.44553243574052"];
+    const dataset3Label = 'N';
+    const dataset3BorderColor = 'yellow';
+    addLineToChart(dataset3Label, dataset3Data, dataset3BorderColor);
+
+});
+</script>
+  
+<script src="main.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-annotation/1.0.2/chartjs-plugin-annotation.min.js"></script>
+</body>
+</html>
+

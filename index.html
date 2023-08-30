@@ -1,26 +1,56 @@
 
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>PQG Controller</title>
+    <title>Contrôleur PQG</title>
     <link rel="shortcut icon" href="logo.png" type="image/x-icon" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
-  <link rel="icon" type="image/x-icon" href="img/logo.png"></head>
+    <link rel="icon" type="image/x-icon" href="img/logo.png">
 </head>
-<body class="background-shapes">
-<!-- Section: Design Block -->
+<body class="background-shapes" style="background-color: #f1f4f6;">
+
 <section class="background-radial-gradient overflow-hidden">
   <style>
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      display: none;
+      color: #ffffff;
+  }
+  
+  .loading-spinner {
+    color: #243882;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #3498db;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      margin: 15px;
+      animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+  }
+  
     body {
-      background-color: #232323; /* Dark background color */
       margin: 0;
       padding: 0;
       font-family: Arial, sans-serif;
       position: relative;
-      color: #fff; /* Text color for the content */
-      height: 100vh; /* Full viewport height */
+      color: #333; /* Couleur du texte sombre */
+      height: 100vh; /* Hauteur totale de la fenêtre d'affichage */
     }
 
     .background-shapes {
@@ -41,7 +71,7 @@
     }
 
     a {
-      color: #ffc107; /* Bright yellow for links */
+      color: #007bff; /* Couleur bleue pour les liens */
       text-decoration: none;
     }
 
@@ -52,46 +82,62 @@
   <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
     <div class="row gx-lg-5 align-items-center mb-5">
       <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
-        <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
-          PQG CONTROLLER <br />
-          <span style="color: hsl(218, 81%, 75%)">APP</span>
+        <h1 class="my-5 display-5 fw-bold ls-tight" style="color: #007bff;">
+          PQG CONTROLLER<br />
+          <span style="color: #0056b3;">APP</span>
         </h1>
-        <p class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%)">
-          This app is designed to monitor and enhance PQG performance by providing valuable statistics and insights. Its primary objective is to help us identify the place of construction mistakes, thereby reducing their occurrence rate. By analyzing data and offering relevant numbers, we aim to improve overall efficiency and quality while ensuring that errors are minimized in construction processes.
-        </p>
+
+        <p class="mb-4 opacity-70" style="color: #555;">
+          Cette application a été élaborée afin d'évaluer et mesurer l'efficacité du PQG, de surveiller ses performances et d'en améliorer la qualité en mettant à disposition des statistiques et des graphes. 
+          Son objectif prédominant consiste à faciliter l'identification des défauts de fabrication, contribuant ainsi à la réduction de leur fréquence. 
+          Cette analyse de données et la présentation de chiffres pertinents sont au cœur de cette démarche.  </p>
       </div>
+
 
       <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
         <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
         <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
 
-        <div class="card bg-glass text-dark">
+        <div class="card bg-light">
           <div class="card-body px-4 py-5 px-md-5">
-                <input type="hidden" name="csrfmiddlewaretoken" value="RnkT9zAxWnKqq7QyoTIGxi0UXicZZW5jHzBk9fskn6ATssRBI8IlcWHBUvvIWa23">
-                <h1 class="text  title text-dark text-center p-5 fw-bold">SIGN IN</h1>
-              <div class="row">
+            <form onsubmit="spinActivated()" action="menu.html">
+              <h1 class="text title text-dark text-center p-5 fw-bold">CONNEXION</h1>
+              <div class="col-12 text-center text-danger">
                 
-              <div class="form-outline mb-4 col-6">
-                <input type="text" id="id" name="id" class="form-control text-dark border-0 " style="background-color: rgb(240, 240, 240);"  placeholder="ID"/>
-              </div>
-
-              <div class="form-outline mb-4 col-6">
-                <input type="password" id="password"  name="password" class="form-control text-dark border-0 " style="background-color: rgb(240, 240, 240);"  placeholder="PASSWORD"/>
-              </div>
             </div>
-            <div class="text-center p-5">
-                <a href="main.html"><button   class="btn btn-dark w-100 btn-block mb-4">
-                    Sign IN
-                  </button></a>
-                  <hr class="  w-100">
-                <a href="signup.html" class="btn btn-outline-secondary w-100">Create an account</a>
+              <div class="row">
 
-            </div>
+                  <div class="col-md-6 mb-4">
+                      <div class="form-outline">
+                          <input type="text" name="username" placeholder="username" class="form-control text-dark" style="background-color: #f0f0f0; border:none; border-bottom: 3px solid grey" maxlength="30" required id="id_username">
+                      </div>
+                  </div>
+                  <div class="col-md-6 mb-4">
+                      <div class="form-outline">
+                          <input type="password" name="password" placeholder="password" class="form-control text-dark" style="background-color: #f0f0f0; border:none; border-bottom: 3px solid grey" required id="id_password">
+                      </div>
+                  </div>
+              </div>
+              <div class="text-center p-5">
+                  <button type="submit" class="btn btn-primary w-100 btn-block mb-4">
+                      Se connecter
+                  </button>
+                  <hr class="w-100">
+                  <a href="/" class="btn btn-outline-secondary w-100">Créer un compte</a>
+              </div>
+          </form>
+          
+          
           </div>
         </div>
       </div>
     </div>
   </div>
 </section>
-    </body>
-</html>  
+<div id="loading" class="loading-overlay">
+  <h4>Chargement des données ...</h4><br>
+  <div class=" loading-spinner"></div>
+<script src="/static/App1/main.js"></script>
+
+</body>
+</html>

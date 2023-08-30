@@ -12,7 +12,6 @@ const body = document.body;
 function toggleMode() {
     body.classList.toggle('light-mode');
 }
-
 modeToggle.addEventListener('click', toggleMode);
 function toggleLoadingOverlay(show) {
   if (show) {
@@ -21,9 +20,13 @@ function toggleLoadingOverlay(show) {
     document.getElementById("loading").style.display = 'none';
   }
   }
+
+
+
 function spinActivated(){
   toggleLoadingOverlay(true);}
 
+  document.addEventListener("DOMContentLoaded", spinActivated());
 
 function createBarChartWithParams1(ctx, labels, data, targetValue) {
     const chartData = {
@@ -32,7 +35,8 @@ function createBarChartWithParams1(ctx, labels, data, targetValue) {
         data: data,
         backgroundColor: ['#006EA6'],
         borderColor: ['WHITE'],
-        borderWidth: 1
+        borderWidth: 1,
+        label: 'PQG Efficiency',
       }]
     };
 
@@ -50,23 +54,25 @@ function createBarChartWithParams1(ctx, labels, data, targetValue) {
       },
       plugins: {
         annotation: {
-          annotations: [
-            {
-              type: 'line',
-              mode: 'horizontal',
-              scaleID: 'y',
-              value: targetValue,
-              borderColor: 'green',
-              borderWidth: 2,
-              borderDash: [5, 5],
-              label: {
-                enabled: true,
-                content: 'Objective (' + targetValue + '%)',
-                position: 'left',
-              },
+                annotations: [
+                    {
+                        type: 'line',
+                        mode: 'horizontal',
+                        scaleID: 'y',
+                        value: targetValue,
+                        borderColor: 'green',
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        label: {
+                            color:"green",
+                            backgroundColor: 'rgba(0, 255, 0, 0)', 
+                            enabled: true,
+                            content: 'Objective ('+targetValue+'%)', 
+                            position: 'left',
+                        },
+                    },
+                ],
             },
-          ],
-        },
       },
     };
 
@@ -127,7 +133,7 @@ function createBarChartWithParams1(ctx, labels, data, targetValue) {
               label: {
                 enabled: true,
                 content: 'Objective (' + targetValue + '%)',
-                position: 'left',
+                position: 'top',
               },
             },
           ],
